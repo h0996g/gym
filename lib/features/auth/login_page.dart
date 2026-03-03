@@ -156,7 +156,7 @@ class _GymTitleState extends State<_GymTitle>
             );
           },
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 10),
         const Text(
           'GYM & FITNESS',
           textAlign: TextAlign.center,
@@ -208,12 +208,12 @@ class _LeftPanel extends StatelessWidget {
                               end: 1.0,
                               curve: Curves.easeOutBack,
                             ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         const _GymTitle()
                             .animate(delay: 200.ms)
                             .fadeIn(duration: 350.ms)
                             .slideY(begin: 0.15, end: 0, curve: Curves.easeOut),
-                        const SizedBox(height: 12),
+
                         // const Text(
                         //   'Train Hard. Live Strong.',
                         //   textAlign: TextAlign.center,
