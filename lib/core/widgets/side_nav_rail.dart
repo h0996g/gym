@@ -98,15 +98,23 @@ class _BrandHeader extends StatelessWidget {
               width: 34,
               height: 34,
               decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(9),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.4),
+                  width: 1.5,
+                ),
               ),
-              child: const Icon(Icons.fitness_center_rounded, color: Colors.white, size: 18),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/logo/logo.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             if (expanded) ...[
               const SizedBox(width: 10),
               Text(
-                'GymPro',
+                'Colossus',
                 style: AppTextStyles.titleLarge.copyWith(
                   color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                   letterSpacing: -0.3,

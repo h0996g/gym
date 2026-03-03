@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../main.dart';
+import '../../features/auth/cubit/auth_state.dart';
+import '../../features/auth/login_page.dart';
 import '../widgets/app_scaffold.dart';
 import '../../features/dashboard/dashboard_page.dart';
 import '../../features/members/members_page.dart';
@@ -11,8 +14,23 @@ import '../../features/statistics/statistics_page.dart';
 import 'app_routes.dart';
 
 final appRouter = GoRouter(
-  initialLocation: AppRoutes.dashboard,
+  initialLocation: AppRoutes.login,
+  redirect: (context, state) {
+    final isAuthenticated = authCubit.state is AuthAuthenticated;
+    final onLogin = state.matchedLocation == AppRoutes.login;
+    if (!isAuthenticated && !onLogin) return AppRoutes.login;
+    if (isAuthenticated && onLogin) return AppRoutes.dashboard;
+    return null;
+  },
   routes: [
+    // Login — full screen, outside ShellRoute (no sidebar)
+    GoRoute(
+      path: AppRoutes.login,
+      name: 'login',
+      pageBuilder: (context, state) => _loginPage(state, const LoginPage()),
+    ),
+
+    // All app pages wrapped in ShellRoute (persistent sidebar)
     ShellRoute(
       builder: (context, state, child) => AppScaffold(child: child),
       routes: [
@@ -62,6 +80,20 @@ final appRouter = GoRouter(
     ),
   ],
 );
+
+CustomTransitionPage<void> _loginPage(GoRouterState state, Widget child) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 400),
+    transitionsBuilder: (context, animation, _, child) {
+      return FadeTransition(
+        opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
+        child: child,
+      );
+    },
+  );
+}
 
 CustomTransitionPage<void> _fadePage(GoRouterState state, Widget child) {
   return CustomTransitionPage<void>(
