@@ -89,7 +89,8 @@ class _BrandHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 64,
-      child: Padding(
+      child: ClipRect(
+        child: Padding(
         padding: EdgeInsets.symmetric(horizontal: expanded ? 18 : 0),
         child: Row(
           mainAxisAlignment: expanded ? MainAxisAlignment.start : MainAxisAlignment.center,
@@ -122,6 +123,7 @@ class _BrandHeader extends StatelessWidget {
               ),
             ],
           ],
+        ),
         ),
       ),
     );
@@ -229,7 +231,8 @@ class _BottomActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return ClipRect(
+      child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: expanded
           ? Row(
@@ -265,6 +268,7 @@ class _BottomActions extends StatelessWidget {
                 ),
               ],
             ),
+      ),
     );
   }
 }

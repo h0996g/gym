@@ -38,14 +38,16 @@ class _AppScaffoldState extends State<AppScaffold>
   }
 
   void _toggleSidebar() {
-    setState(() {
-      _expanded = !_expanded;
-      if (_expanded) {
-        _sidebarController.forward();
-      } else {
-        _sidebarController.reverse();
-      }
-    });
+    if (_expanded) {
+      // Collapsing: hide content immediately, then animate width
+      setState(() => _expanded = false);
+      _sidebarController.reverse();
+    } else {
+      // Expanding: animate width first, then show content
+      _sidebarController.forward().whenComplete(() {
+        if (mounted) setState(() => _expanded = true);
+      });
+    }
   }
 
   @override
